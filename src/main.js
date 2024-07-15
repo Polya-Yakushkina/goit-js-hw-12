@@ -1,4 +1,4 @@
-import { getImages } from "./js/pixabay-api"
+import { getImages, resetPage } from "./js/pixabay-api"
 import { showGallery } from "./js/render-functions"
 
 import iziToast from "izitoast";
