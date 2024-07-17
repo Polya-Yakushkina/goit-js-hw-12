@@ -30,11 +30,30 @@ form.addEventListener('submit', async event => {
     toggleLoadBtn(false);
     gallery.innerHTML = '';
 
-    await newImages();
-    form.reset();
+    try {
+        await newImages();
+    } catch (error) {
+        iziToast.error({
+            title: "Error",
+            message: "An error occurred while fetching images. Please try again!",
+            position: "topRight"
+        });
+    } finally {
+        form.reset();
+    }
 });
 
-loadBtn.addEventListener('click', newImages);
+loadBtn.addEventListener('click', async () => {
+    try {
+        await newImages();
+    } catch (error) {
+        iziToast.error({
+            title: "Error",
+            message: "An error occurred while fetching images. Please try again!",
+            position: "topRight"
+        });
+    }
+});
 
 async function newImages() {
     try {
