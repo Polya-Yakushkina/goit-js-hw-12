@@ -2,6 +2,7 @@ import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
 const gallery = document.querySelector('.gallery');
+const loadBtn = document.querySelector('.load-more');
 
 function showGallery(images) {
     const markup = images.map(image => `
@@ -42,4 +43,12 @@ function showGallery(images) {
     lightbox.refresh();
 }
 
-export { showGallery };
+function toggleLoadBtn(show) {
+    if (show) {
+        loadBtn.classList.remove('hidden');
+    } else {
+        loadBtn.classList.add('hidden');
+    }
+}
+
+export { showGallery, toggleLoadBtn };

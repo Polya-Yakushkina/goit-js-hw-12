@@ -23,3 +23,114 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+body {
+  background-color: #FFFFFF;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.header {
+  text-align: center;
+  margin: 48px 0;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}
+
+.input {
+  outline: none;
+  padding: 10px;
+  border: 1px solid #808080;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #808080;
+}
+
+.button {
+  background-color: #4E75FF;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+
+.gallery-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 200px;
+  padding: 24px;
+  gap: 24px;
+  background-color: #FFFFFF;
+}
+
+.gallery-item {
+  flex-basis: calc((100% - 48px) / 3);
+  list-style: none;
+  max-width: 360px;
+  min-height: 200px;
+  border: 1px solid #808080;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.img-container {
+  background-color: #FFFFFF;
+  padding: 10px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #2E2F42;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.img-info {
+  flex: 1 1 calc(25% - 10px);
+  text-align: center;
+}
+
+.gallery-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.img-stats {
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.img-stats-value {
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.hidden {
+  display: none;
+}
+
+.load-more {
+    margin-top: 16px;
+}
