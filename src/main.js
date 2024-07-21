@@ -12,9 +12,21 @@ const loadBtn = document.querySelector('.load-more');
 
 let query = '';
 
+async function errorHandler(fn) {
+    try {
+        await fn();
+    } catch (error) {
+        iziToast.info({
+            title: "Info",
+            message: "Ooops, something went wrong... Try again later.",
+            position: "topRight"
+        });
+    }
+}
+
 form.addEventListener('submit', async event => {
     event.preventDefault();
-    query = input.value.toLowerCase().trim();
+    query = input.value;
 
     if (query === '') {
         iziToast.error({
@@ -26,36 +38,32 @@ form.addEventListener('submit', async event => {
     }
 
     resetPage();
-    loader.classList.add('visible');
     toggleLoadBtn(false);
     gallery.innerHTML = '';
 
-    try {
+    await errorHandler(async () => {
         await newImages();
-    } catch (error) {
-        iziToast.error({
-            title: "Error",
-            message: "An error occurred while fetching images. Please try again!",
-            position: "topRight"
-        });
-    } finally {
+    }).finally(() => {
         form.reset();
-    }
+    });
 });
 
 loadBtn.addEventListener('click', async () => {
-    try {
+    await errorHandler(async () => {
         await newImages();
-    } catch (error) {
-        iziToast.error({
-            title: "Error",
-            message: "An error occurred while fetching images. Please try again!",
-            position: "topRight"
-        });
-    }
+        const galleryItem = document.querySelector('.gallery-item');
+        if (galleryItem) {
+            const { height } = galleryItem.getBoundingClientRect();
+            window.scrollBy({
+                top: height * 2,
+                behavior: 'smooth'
+            });
+        }
+    });
 });
 
 async function newImages() {
+    loader.classList.add('visible');
     try {
         const { hits, totalHits } = await getImages(query);
         if (hits.length === 0) {
@@ -69,15 +77,7 @@ async function newImages() {
         }
         
         showGallery(hits);
-        const galleryItem = document.querySelector('.gallery-item');
-        if (galleryItem) {
-            const { height } = galleryItem.getBoundingClientRect();
-            window.scrollBy({
-                top: height * 2,
-                behavior: 'smooth'
-            });
-        }
-
+        
         if (gallery.children.length < totalHits) {
             toggleLoadBtn(true);
         } else {
@@ -88,6 +88,12 @@ async function newImages() {
                 position: "topRight"
             });
         }
+    } catch (error) {
+        iziToast.info({
+            title: "Info",
+            message: "Ooops, something went wrong... Try again later.",
+            position: "topRight"
+        });
     } finally {
         loader.classList.remove('visible');
     }

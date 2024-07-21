@@ -9,20 +9,14 @@ let currentPage = 1;
     
 async function getImages(query) {
     const request = `${URL}?key=${API_KEY}&q=${query}&image_type=${imgType}&orientation=${orientation}&safesearch=${safeSearch}&per_page=15&page=${currentPage}`;
+    const res = await axios.get(request);
+    const data = res.data;
     
-    try {
-        const res = await axios.get(request);
-        const data = res.data;
-
-        if (data.hits.length === 0) {
+    if (data.hits.length === 0) {
             return { hits: [], totalHits: 0 };
         }
         currentPage += 1;
         return { hits: data.hits, totalHits: data.totalHits };
-    } catch(error) {
-        console.error("Failed to fetch images due to error:", error);
-        return { hits: [], totalHits: 0 };
-    }
 }
 
 function resetPage() {
